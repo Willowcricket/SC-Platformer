@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Transform tf;
+    private GameManager GameManager;
+    public Transform tf;
     private Rigidbody2D rb2d;
     private SpriteRenderer sr;
     private Animator anime;
+    private SoundManager SoundManager;
 
     public float speed = 5.0f;
     public float jumpForce = 450.0f;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         anime = gameObject.GetComponent<Animator>();
+        SoundManager = GameManager.instance.GetComponent<SoundManager>();
     }
 
     // Update is called once per frame
@@ -97,6 +100,7 @@ public class PlayerController : MonoBehaviour
                     jumpForce = 250.0f;
                 }
                 rb2d.AddForce(Vector2.up * jumpForce);
+                SoundManager.PlayJump();
             }
         }
     }

@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public int currentScene = 0;
+    public int PlayerLives = 3;
 
     private void Awake()
     {
