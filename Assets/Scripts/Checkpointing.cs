@@ -10,8 +10,6 @@ public class Checkpointing : MonoBehaviour
     public Sprite CheckPNGot;
     public Sprite CheckPGot;
     public bool Got = false;
-
-    public Transform PlayerTrans;
     public Transform trf;
 
     private void Start()
@@ -20,12 +18,24 @@ public class Checkpointing : MonoBehaviour
         trf = gameObject.GetComponent<Transform>();
     }
 
+    private void Update()
+    {
+        if (Player == null)
+        {
+            Player = GameManager.instance.Player;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            sr.sprite = CheckPGot;
-            Got = true;
+            if (Got != true)
+            {
+                sr.sprite = CheckPGot;
+                Got = true;
+                GameManager.instance.GetComponent<SoundManager>().PlayCheckPGet();
+            }
         }
     }
 
@@ -33,9 +43,20 @@ public class Checkpointing : MonoBehaviour
     {
         if (GameManager.instance.PlayerLives != 0)
         {
-            //Player.gameObject.transform = trf;
+            if (Got == true)
+            {
+                GameManager.instance.Player.transform.position = this.gameObject.transform.position;
+            }
+            else
+            {
+                GameManager.instance.Player.transform.position = new Vector2(0.0f, 0.0f);
+            }
             GameManager.instance.PlayerLives--;
             Debug.Log("Respawning Player");
+        }
+        else
+        {
+            GameManager.instance.LoadLevel(4);
         }
     }
 }

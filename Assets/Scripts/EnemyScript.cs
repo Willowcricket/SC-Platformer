@@ -23,6 +23,7 @@ public class EnemyScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             CheckPoint.gameObject.GetComponent<Checkpointing>().RespawnPlayer();
+            GameManager.instance.GetComponent<SoundManager>().PlayEnemyKill();
             Debug.Log("Enemy Has hit Player");
         }
     }

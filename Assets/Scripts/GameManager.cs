@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public int currentScene = 0;
     public int PlayerLives = 3;
+    public GameObject Player;
 
     private void Awake()
     {
@@ -20,6 +21,14 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
             Debug.Log("Alert: More than one Game Manager detected, Deleting extra(s)");
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 
